@@ -1,0 +1,3 @@
+#DELETE
+
+book.delete()
