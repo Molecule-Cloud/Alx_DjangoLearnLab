@@ -6,7 +6,7 @@ from django.views.generic import DetailView
 
 def list_books(request):
     books = Book.objects.all()
-    return render(request, 'relationship_app/book_list.html', {'books': books})
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 class BookDetailView(DetailView):
     """"A class-based view for displaying details of a specific library, listing all books available in that library"""
