@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import views
 from.views import LibraryDetailView
+from .views import list_books
 
 urlpatterns = [
     # Function-based view: Shows ALL books
@@ -8,5 +9,5 @@ urlpatterns = [
     
     # Class-based view: Shows ONE specific library (needs ID)
     path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library-detail'),
-    # ↑ Added: <int:pk> to tell Django WHICH library
+
 ]
