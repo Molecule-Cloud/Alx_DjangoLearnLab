@@ -93,12 +93,12 @@ def register(request):
 
 @user_passes_test(admin_required)
 def admin_view(request):
-    return render(request, 'relationship_app/admin-view.html')
+    return render(request, 'relationship_app/admin_view.html')
 
 @user_passes_test(librarian_required, login_url='relationship_app/login')
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian-view.html')
+    return render(request, 'relationship_app/librarian_view.html')
 
 @user_passes_test(member_required, login_url='relationship_app/login')
 def member_view(request):
-    return render(request, 'relationship_app/member-view.html')
+    return render(request, 'relationship_app/member_view.html')
