@@ -58,10 +58,10 @@ def ProtectedView(request):
 #User Registration View
 
 def register(request):
-    if request.method =='POST':
-        form = UserCreationForm(request.POST)
+    if request.method == 'POST':
+        form = UserCreationForm()
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('book_list')
+            return redirect('relationship_app/register.html')
 
