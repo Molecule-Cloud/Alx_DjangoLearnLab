@@ -3,9 +3,10 @@ from .models import Library, Book, Author
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import DetailView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import permission_required
 
 
 
