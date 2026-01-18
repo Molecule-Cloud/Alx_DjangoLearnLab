@@ -25,8 +25,8 @@ urlpatterns = [
     path('member/dashboard', views.member_view, name='member-dashboard'),
 
 
-    path('book/add/', views.add_book_view, name='book-add'),
-    path('book/<int:book_id>/edit/', views.edit_book_view, name='book-edit'),
-    path('book/<int:book_id>/delete/', views.delete_book_view, name='book-delete'),
-    path('manage/books/', views.manage_books_view, name='manage-books'),
+    path('book/add/', views.add_book_view, name='add_book'),
+    path('book/<int:book_id>/edit/', views.edit_book_view, name='edit_book'),
+    path('book/<int:book_id>/delete/', views.delete_book_view, name='delete_book'),
+    path('manage/books/', views.manage_books_view, name='manage_books'),
 ]
