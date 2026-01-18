@@ -3,9 +3,21 @@ from .models import Library, Book
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import DetailView, CreateView
 from django.urls import reverse_lazy
+
+
+
+# === ROLE CHECKING HELPERS === #
+def admin_required(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.is_admin()
+
+def librarian_required(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.is_librarian() 
+
+def member_required(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.is_member()
 
 
 
@@ -59,9 +71,34 @@ def ProtectedView(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm()
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            profile = user.profile
+            profile.role = 'MEMBER'
+            profile.save()
+
             login(request, user)
             return redirect('relationship_app/register.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
 
+
+
+
+
+# === ROLE-BASED ACCESS CONTROL VIEWS === #
+
+@user_passes_test(admin_required)
+def admin_view(request):
+    return render(request, 'relationship_app/admin-view.html')
+
+@user_passes_test(librarian_required, login_url='relationship_app/login')
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian-view.html')
+
+@user_passes_test(member_required, login_url='relationship_app/login')
+def member_view(request):
+    return render(request, 'relationship_app/member-view.html')
