@@ -113,3 +113,8 @@ def user_dashboard(request):
         'permissions': user_perms,
         'groups': request.user.groups.all(),
     })
+
+def safe_search(request):
+    search_term = request.GET.get('q', '')
+    books = Book.object.filter(title_icontains=search_term)
+    return render(request, 'bookshelf/search_results.html', {'books': books, 'search_term': search_term})
