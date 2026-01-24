@@ -27,8 +27,14 @@ SECRET_KEY = 'django-insecure-_$yls^!wn&ml_%lxgfp@p&=fl(&n@=!w(-hc#^*d=^@@7ovurh
 DEBUG = False
 
 # == Browser Security Headers ==
+
+# Enable Browser's HHS filtering and help prevent cros-site scripting attacks
 SECURE_BROWSER_XSS_FILTER = True
+
+# Protect against clickjacking
 X_FRAME_OPTIONS = 'DENY'
+
+# Prevent MIME-type sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # == HTTPS Settings ==
@@ -67,6 +73,23 @@ MIDDLEWARE = [
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", 'ajax.googleapis.com')
 CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com')
+
+
+# == HTTP Support Settings ==
+
+# Redirect all non HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Instruct Browsers to only access the site over HTTPS for the next year
+SECURE_HSTS_SECONDS = 31536000
+
+#  Include subdomains in HSTS policy to allow preloading
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+## == Cookie Settings ==
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 ROOT_URLCONF = 'LibraryProject.urls'
