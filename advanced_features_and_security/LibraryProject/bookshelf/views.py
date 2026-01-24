@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import permission_required, login_required, 
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from .models import Book, Article
+from .forms import ExampleForm
 
 # ===== HELPER FUNCTIONS =====
 def user_can_view_books(user):
