@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
+from django.db.models import CASCADE
+
+
 
 # Create your models here.
 class Book(models.Model):
@@ -10,6 +13,33 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.author} ([{self.publication_year}])"
+    
+    class Meta:
+        permissions = [
+            ('can_view_book', 'Can view book details'),
+            ('can_create_book', 'Can create new books'),
+            ('can_edit_book', 'Can edit existing books'),
+            ('can_delete_book', 'Can delete books'),
+            ('can_publish_book', 'Can publish or unpublish books'),
+        ]
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=False)
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        permissions = [
+            ('can_publish_article', 'Can publish or unpublish articles'),
+            ('can_view_article', 'Can view articles'),
+            ('can_edit_article', 'Can edit articles'),
+            ('can_delete_article', 'Can delete articles'),
+            ('can_create_article', 'Can create articles'),
+        ]
 
 
 
