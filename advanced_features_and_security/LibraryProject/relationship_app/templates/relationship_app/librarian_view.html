@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Librarian Dashboard</title>
+</head>
+
+<body>
+    <h1>📚 Librarian Dashboard</h1>
+    <p>Welcome, {{ user.username }} (Librarian)</p>
+
+    <h2>Books to Manage:</h2>
+    {% if books %}
+    <ul>
+        {% for book in books %}
+        <li>
+            <strong>{{ book.title }}</strong> by {{ book.author.name }}
+            <br>
+            <small>Available in {{ book.libraries.count }} libraries</small>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No books in the system.</p>
+    {% endif %}
+
+    <h3>Librarian Actions:</h3>
+    <ul>
+        <li>Add new books</li>
+        <li>Manage book inventory</li>
+        <li>Track book loans</li>
+        <li>Help members</li>
+    </ul>
+
+    <hr>
+    <a href="{% url 'book-list' %}">Public Books List</a> |
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+
+</html>

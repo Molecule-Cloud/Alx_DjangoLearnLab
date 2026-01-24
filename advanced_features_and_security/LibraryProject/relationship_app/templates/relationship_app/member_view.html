@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Member Dashboard</title>
+</head>
+
+<body>
+    <h1>👤 Member Dashboard</h1>
+    <p>Welcome, {{ user.username }} (Member)</p>
+
+    <h2>Available Books:</h2>
+    {% if books %}
+    <ul>
+        {% for book in books %}
+        <li>
+            <strong>{{ book.title }}</strong> by {{ book.author.name }}
+            <button>Borrow</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No books available at the moment.</p>
+    {% endif %}
+
+    <h3>Member Benefits:</h3>
+    <ul>
+        <li>Borrow up to 5 books</li>
+        <li>2-week loan period</li>
+        <li>Renew books online</li>
+        <li>Request new books</li>
+    </ul>
+
+    <hr>
+    <a href="{% url 'book-list' %}">Browse All Books</a> |
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+
+</html>

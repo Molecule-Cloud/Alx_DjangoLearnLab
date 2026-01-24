@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <h1>👑 Admin Dashboard</h1>
+    <p>Welcome, {{ user.username }} (Admin)</p>
+
+    <h2>Admin Privileges:</h2>
+    <ul>
+        <li>Manage all users</li>
+        <li>View system statistics</li>
+        <li>Configure library settings</li>
+        <li>Access all data</li>
+    </ul>
+
+    <h3>Quick Actions:</h3>
+    <p><a href="{% url 'book-list' %}">View All Books</a></p>
+    <p><a href="/admin/" target="_blank">Django Admin Panel</a></p>
+
+    <hr>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+
+</html>
