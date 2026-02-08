@@ -1,4 +1,4 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from .models import Book, Author
 import json
 
-class BookAPITests(TestCase):
+class BookAPITests(APITestCase):
     def setUp(self):
         """
         Setup test data before each test
