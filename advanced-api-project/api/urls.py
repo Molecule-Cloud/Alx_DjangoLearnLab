@@ -1,12 +1,12 @@
 from django.urls import path
 from . import views
 
-# == URL Patterns to connect API endpoints to views ==
-urlpatterns = [
-    path('list/', views.ListAPIView.as_view(), name='list'),
-    path('list-create/', views.ListCreateAPIView.as_view(), name='list-create'),
-    path('detail/<int:pk>/', views.DetailAPIView.as_view(), name='detail'),
-    path('update/<int:pk>/', views.UpdateAPIView.as_view(), name='update'),
-    path('delete/<int:pk>/', views.DeleteAPIView.as_view(), name='delete'),
 
+urlpatterns = [
+    # RESTful book endpoints
+    path('books/', views.BookListView.as_view(), name='book-list'),  # GET list, POST create
+    path('books/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),  # GET, PUT, PATCH, DELETE
+    
+    # Author endpoints
+    path('authors/', views.AuthorListView.as_view(), name='author-list'),
 ]
