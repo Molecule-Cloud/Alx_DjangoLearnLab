@@ -6,6 +6,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import BookFilter
+from django_filters import rest_framework
 
 # == Generic API Views ==
 class ListView(generics.ListAPIView):
