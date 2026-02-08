@@ -1,0 +1,101 @@
+@baseUrl = http://localhost:8000/api
+@contentType = application/json
+
+### 1. GET ALL BOOKS (No auth needed)
+GET {{baseUrl}}/books/
+Content-Type: {{contentType}}
+
+### 2. CREATE A BOOK (Requires authentication)
+POST {{baseUrl}}/books/
+Content-Type: {{contentType}}
+Authorization: Token your_auth_token_here
+
+{
+    "title": "The Great Gatsby",
+    "publication_year": 1925,
+    "author": 1
+}
+
+### 3. GET SINGLE BOOK
+GET {{baseUrl}}/books/1/
+Content-Type: {{contentType}}
+
+### 4. UPDATE BOOK (Owner/Admin only)
+PUT {{baseUrl}}/books/1/
+Content-Type: {{contentType}}
+Authorization: Token your_auth_token_here
+
+{
+    "title": "The Great Gatsby - Revised",
+    "publication_year": 1925,
+    "author": 1
+}
+
+### 5. PARTIAL UPDATE
+PATCH {{baseUrl}}/books/1/
+Content-Type: {{contentType}}
+Authorization: Token your_auth_token_here
+
+{
+    "title": "The Great Gatsby - Special Edition"
+}
+
+### 6. DELETE BOOK
+DELETE {{baseUrl}}/books/1/
+Content-Type: {{contentType}}
+Authorization: Token your_auth_token_here
+
+### 7. TEST WITHOUT AUTH (Should fail)
+POST {{baseUrl}}/books/
+Content-Type: {{contentType}}
+
+{
+    "title": "Should Fail Book",
+    "publication_year": 2023,
+    "author": 1
+}
+
+### 8. TEST WITH WRONG USER (Permission test)
+# Get a token for a regular user
+POST http://localhost:8000/api-token-auth/
+Content-Type: {{contentType}}
+
+{
+    "username": "regular_user",
+    "password": "password123"
+}
+
+### 9. TEST FUTURE YEAR VALIDATION (Should fail)
+POST {{baseUrl}}/books/
+Content-Type: {{contentType}}
+Authorization: Token your_auth_token_here
+
+{
+    "title": "Future Book",
+    "publication_year": 2050,
+    "author": 1
+}
+
+### 10. GET ALL AUTHORS WITH NESTED BOOKS
+GET {{baseUrl}}/authors/
+Content-Type: {{contentType}}
+
+### 11. CREATE AUTHOR
+POST {{baseUrl}}/authors/
+Content-Type: {{contentType}}
+
+{
+    "name": "F. Scott Fitzgerald"
+}
+
+### 12. FILTER BOOKS BY CATEGORY
+GET {{baseUrl}}/books/?category=fiction
+Content-Type: {{contentType}}
+
+### 13. SEARCH BOOKS
+GET {{baseUrl}}/books/?search=gatsby
+Content-Type: {{contentType}}
+
+### 14. ORDER BOOKS
+GET {{baseUrl}}/books/?ordering=-publication_year
+Content-Type: {{contentType}}
