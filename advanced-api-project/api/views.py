@@ -23,7 +23,7 @@ class ListView(generics.ListAPIView):
     ]
     filterset_class = BookFilter
     search_fields = ['title', 'author__name', 'description']
-    ordering_fields = ['title', 'publicatiob_year', 'created_at']
+    ordering_fields = ['title', 'publication_year', 'created_at']
     ordering = ['title'] #Default
     permission_classes = [IsAuthenticatedOrReadOnly]
 
