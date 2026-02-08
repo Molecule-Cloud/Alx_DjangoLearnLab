@@ -6,7 +6,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 
 # == Generic API Views ==
-class ListAPIView(generics.ListAPIView):
+class ListView(generics.ListAPIView):
     """
     Generic API view for listing objects.
     """
@@ -17,7 +17,7 @@ class ListAPIView(generics.ListAPIView):
 
 
 
-class ListCreateAPIView(generics.ListCreateAPIView):
+class CreateView(generics.ListCreateAPIView):
     """
     Generic API view for listing and creating objects.
     """
@@ -31,7 +31,7 @@ class ListCreateAPIView(generics.ListCreateAPIView):
 
     
 
-class DetailAPIView(generics.RetrieveAPIView):
+class DetailView(generics.RetrieveAPIView):
     """
     Generic API view for retrieving a single object.
     """
@@ -41,7 +41,7 @@ class DetailAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class UpdateAPIView(generics.UpdateAPIView):
+class UpdateView(generics.UpdateAPIView):
     """
     Generic API view for updating an existing object.
     """
@@ -57,7 +57,7 @@ class UpdateAPIView(generics.UpdateAPIView):
     
 
 
-class DeleteAPIView(generics.DestroyAPIView):
+class DeleteView(generics.DestroyAPIView):
     """
     Generic API view for deleting an existing object.
     """
