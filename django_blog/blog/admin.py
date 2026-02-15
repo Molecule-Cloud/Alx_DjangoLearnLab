@@ -4,4 +4,4 @@ from .models import User
 
 # User Model
 
-admin.site.register(User, UserAdmin)
+# admin.site.register(User, UserAdmin)
