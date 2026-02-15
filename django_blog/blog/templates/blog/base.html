@@ -12,26 +12,32 @@
         <header>
             <nav>
                 <ul>
-                    <li><a href="{% 'home' %}">Home</li>
-                    <li><a href="{% 'post-list '%}">Blog Posts></li>
-                    {% is user.isauthenticated %}
-                        <li><a href="{% url 'post_create' %}">New Post</li>
-                        <li><a href="{% url 'profile' %}">Profile ({{user.username}})></li>
-                        <li>
-                            <form action="{% url 'logout' %}" method="post">{% csrf_token %}
-                                <button type="submit">Logout</button>
-                            </form>
-                        </li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'post_list' %}">Blog Posts</a></li>
+            
+                    {% if user.is_authenticated %}
+                    <!-- User IS logged in -->
+                    <li><a href="{% url 'post_create' %}">New Post</a></li>
+                    <li><a href="{% url 'profile' %}">
+                            Profile ({{ user.username }})
+                        </a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
                     {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                        <li><a href="{% url 'register' %}">register</a></li>
+                    <!-- User is NOT logged in -->
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
                     {% endif %}
                 </ul>
             </nav>
         </header>
         <div class="content">
             {% blog content %}
-            <!-- Specific content goes here -->
+            <!-- pass -->
             {% endblock %}
         </div>
 

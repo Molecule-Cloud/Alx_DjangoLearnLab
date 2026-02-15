@@ -1,0 +1,67 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Profile - Django Blog{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>Your Profile</h2>
+
+    <!-- Display messages -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="profile-info">
+        <h3>Account Information</h3>
+
+        <form method="post" class="profile-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" value="{{ user.username }}" disabled class="form-control">
+                <small>Username cannot be changed</small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="{{ user.email }}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Date Joined:</label>
+                <input type="text" value="{{ user.date_joined|date:'F j, Y' }}" disabled class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Last Login:</label>
+                <input type="text" value="{{ user.last_login|date:'F j, Y H:i' }}" disabled class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+
+        <div class="profile-stats">
+            <h3>Your Activity</h3>
+            <p>Total posts: {{ user.posts.count }}</p>
+            <p><a href="{% url 'post_create' %}">Create New Post</a></p>
+            <p><a href="{% url 'post_list' %}">View Your Posts</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
