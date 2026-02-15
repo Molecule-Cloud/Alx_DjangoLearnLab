@@ -7,6 +7,8 @@ from .forms import PostForm
 from django.contrib import messages
 from .models import Comment
 from .forms import CommentForm
+from django.db.models import Q 
+from .models import Tag  
 
 
 # Create your views here.
@@ -233,3 +235,63 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def get_success_url(self):
         return reverse('post_detail', kwargs={'pk': self.object.post.id})
+    
+
+
+class TagListView(ListView):
+    """Display all tags"""
+    model = Tag
+    template_name = 'blog/tag_list.html'
+    context_object_name = 'tags'
+    paginate_by = 20
+
+
+class TagDetailView(DetailView):
+    """Display all posts with a specific tag"""
+    model = Tag
+    template_name = 'blog/tag_detail.html'
+    context_object_name = 'tag'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get all posts with this tag
+        tag = self.get_object()
+        context['posts'] = tag.posts.all().order_by('-published_date')
+        return context
+
+
+class PostSearchView(ListView):
+    """
+    Search posts by title, content, or tags
+    Uses Q objects for complex OR queries
+    """
+    model = Post
+    template_name = 'blog/post_search.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        """
+        Custom queryset based on search query
+        """
+        queryset = super().get_queryset()
+        
+        # Get search query from URL
+        query = self.request.GET.get('q', '')
+        
+        if query:
+            # Complex search using Q objects (OR conditions)
+            queryset = queryset.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(author__username__icontains=query) |
+                Q(tags__name__icontains=query)
+            ).distinct().order_by('-published_date')  # Remove duplicates
+            
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Pass search query to template
+        context['query'] = self.request.GET.get('q', '')
+        return context

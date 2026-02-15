@@ -1,0 +1,44 @@
+<!-- blog/templates/blog/tag_list.html -->
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}All Tags - Django Blog{% endblock %}
+
+{% block content %}
+<div class="tags-container">
+    <h1>All Tags</h1>
+
+    <!-- Tag Cloud -->
+    <div class="tag-cloud">
+        {% for tag in tags %}
+        <a href="{% url 'tag_detail' tag.slug %}" class="tag-item tag-size-{{ tag.posts.count|default:1 }}">
+            {{ tag.name }}
+            <span class="tag-count">{{ tag.posts.count }}</span>
+        </a>
+        {% empty %}
+        <p>No tags yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

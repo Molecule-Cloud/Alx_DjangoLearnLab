@@ -5,6 +5,10 @@ from .views import (
     PostListView, PostDetailView, PostCreateView,
     PostUpdateView, PostDeleteView, CommentCreateView, CommentUpdateView, CommentDeleteView
 )
+from .views import (
+    TagListView, TagDetailView, PostSearchView  # Add these
+)
+
 
 urlpatterns = [
     # Homepage
@@ -48,4 +52,11 @@ urlpatterns = [
     path('post/<int:post_id>/comment/<int:pk>/delete/', 
          CommentDeleteView.as_view(), 
          name='comment_delete'),
+
+     # ===== TAGGING =====
+    path('tags/', TagListView.as_view(), name='tag_list'),
+    path('tag/<slug:slug>/', TagDetailView.as_view(), name='tag_detail'),
+    
+    # ===== SEARCH =====
+    path('search/', PostSearchView.as_view(), name='post_search'),
 ]

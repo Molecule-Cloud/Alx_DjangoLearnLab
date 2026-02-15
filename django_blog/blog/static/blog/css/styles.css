@@ -755,3 +755,199 @@ footer {
     color: #4a5568;
     font-style: italic;
 }
+
+/* Add to blog/static/blog/css/styles.css */
+
+/* ===== TAGGING STYLES ===== */
+
+/* Tag cloud */
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.tag-item {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tag-item:hover {
+    transform: scale(1.1);
+}
+
+.tag-count {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+}
+
+/* Tag size variations */
+.tag-size-1 {
+    font-size: 0.9rem;
+}
+
+.tag-size-2 {
+    font-size: 1rem;
+}
+
+.tag-size-3 {
+    font-size: 1.1rem;
+}
+
+.tag-size-4 {
+    font-size: 1.2rem;
+}
+
+.tag-size-5 {
+    font-size: 1.3rem;
+}
+
+/* Tag badges */
+.tag-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: #e2e8f0;
+    color: #4a5568;
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    margin-right: 0.3rem;
+    transition: background 0.3s;
+}
+
+.tag-badge:hover {
+    background: #667eea;
+    color: white;
+}
+
+/* Post tags section */
+.post-tags {
+    margin: 1rem 0;
+}
+
+.post-tags span {
+    color: #718096;
+    margin-right: 0.5rem;
+}
+
+/* Tag detail page */
+.tag-count {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-left: 1rem;
+}
+
+/* ===== SEARCH STYLES ===== */
+
+/* Navbar search */
+.search-nav-item {
+    flex: 1;
+    max-width: 300px;
+}
+
+.nav-search {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+}
+
+.nav-search-input {
+    width: 100%;
+    padding: 0.3rem 0.8rem;
+    border: none;
+    border-radius: 20px 0 0 20px;
+    font-size: 0.9rem;
+}
+
+.nav-search-btn {
+    padding: 0.3rem 0.8rem;
+    background: white;
+    border: none;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-search-btn:hover {
+    background: #f0f0f0;
+}
+
+/* Search page */
+.search-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-form {
+    margin: 2rem 0;
+}
+
+.search-box {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.result-count {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-left: 1rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    background: #f7fafc;
+    border-radius: 10px;
+    color: #718096;
+}
+
+.highlight {
+    background: yellow;
+    font-weight: bold;
+}
+
+/* Responsive search */
+@media (max-width: 768px) {
+    .search-nav-item {
+        max-width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .nav-search {
+        width: 100%;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .search-box .btn {
+        width: 100%;
+    }
+}

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 
+from django.utils.text import slugify  # Add this import at the top
+
 # == User Model == #
 # class User(User):
 #     email = models.EmailField(unique=True)
@@ -21,6 +23,11 @@ class Post(models.Model):
     content = models.TextField()
     published_date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
+    tags = models.ManyToManyField(
+        Tag,
+        related_name='posts',      # Allows tag.posts.all()
+        blank=True  
+    ) 
 
     def __str__(self):
         return self.title
@@ -67,3 +74,37 @@ class Comment(models.Model):
     def __str__(self):
         """String representation"""
         return f'Comment by {self.author.username} on {self.post.title}'
+    
+
+
+class Tag(models.Model):
+    """
+    Tag model for categorizing posts
+    
+    Tags are like labels that can be applied to multiple posts
+    Each tag has a unique name and automatically generated slug for URLs
+    """
+    
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['name']
+    
+    def save(self, *args, **kwargs):
+        """
+        Automatically create slug from name
+        Example: "Django Tips" → "django-tips"
+        """
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        """URL for tag detail page"""
+        from django.urls import reverse
+        return reverse('tag_detail', args=[self.slug])

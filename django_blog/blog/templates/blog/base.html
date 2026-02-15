@@ -15,20 +15,25 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'post_list' %}">Blog Posts</a></li>
             
+                    <!-- Add search form -->
+                    <li class="search-nav-item">
+                        <form method="get" action="{% url 'post_search' %}" class="nav-search">
+                            <input type="text" name="q" placeholder="Search..." class="nav-search-input">
+                            <button type="submit" class="nav-search-btn">🔍</button>
+                        </form>
+                    </li>
+            
+                    <!-- Rest of navigation -->
                     {% if user.is_authenticated %}
-                    <!-- User IS logged in -->
                     <li><a href="{% url 'post_create' %}">New Post</a></li>
-                    <li><a href="{% url 'profile' %}">
-                            Profile ({{ user.username }})
-                        </a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li>
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="logout-btn">Logout</button>
+                            <button type="submit">Logout</button>
                         </form>
                     </li>
                     {% else %}
-                    <!-- User is NOT logged in -->
                     <li><a href="{% url 'login' %}">Login</a></li>
                     <li><a href="{% url 'register' %}">Register</a></li>
                     {% endif %}

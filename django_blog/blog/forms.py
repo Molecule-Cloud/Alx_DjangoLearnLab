@@ -2,7 +2,9 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post
-from .models import Comment 
+from .models import Comment
+from .models import Post, Comment, Tag
+
 
 class UserRegistration(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
@@ -29,25 +31,45 @@ class UserRegistration(UserCreationForm):
         return email
 
 
+
 class PostForm(forms.ModelForm):
+    """
+    Form for creating and editing blog posts
+    Now includes tag selection
+    """
+    
+    # Add a field for tags
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-control',
+            'size': 5  # Show 5 tags at a time
+        })
+    )
+    
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'tags']  # Add 'tags' to fields
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'Title goes here'
+                'class': 'form-control',
+                'placeholder': 'Enter post title'
             }),
             'content': forms.Textarea(attrs={
-                'class': 'form-control', 'placeholder': 'Start typing'
-            })
+                'class': 'form-control',
+                'placeholder': 'Write your post content here...',
+                'rows': 10
+            }),
         }
     
     def __init__(self, *args, **kwargs):
-        super().__inti__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+        # Add 'form-control' class to every field
         for field_name in self.fields:
-            self.title[field_name].widget.attrs.update({
+            self.fields[field_name].widget.attrs.update({
                 'class': 'form-control'
-           } )
+            })
 
 
 

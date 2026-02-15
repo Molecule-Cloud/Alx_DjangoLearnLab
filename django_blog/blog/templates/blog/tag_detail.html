@@ -1,0 +1,65 @@
+<!-- blog/templates/blog/tag_detail.html -->
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Posts tagged "{{ tag.name }}" - Django Blog{% endblock %}
+
+{% block content %}
+<div class="tag-detail-container">
+    <h1>
+        Posts tagged with "{{ tag.name }}"
+        <span class="tag-count">{{ posts.count }} post{{ posts.count|pluralize }}</span>
+    </h1>
+
+    <!-- Posts with this tag -->
+    {% if posts %}
+    <div class="posts-list">
+        {% for post in posts %}
+        <article class="post-card">
+            <h2 class="post-title">
+                <a href="{% url 'post_detail' post.id %}">
+                    {{ post.title }}
+                </a>
+            </h2>
+
+            <div class="post-meta">
+                <span class="post-author">
+                    By {{ post.author.username }}
+                </span>
+                <span class="post-date">
+                    {{ post.published_date|date:"F j, Y" }}
+                </span>
+            </div>
+
+            <div class="post-excerpt">
+                {{ post.content|truncatewords:50 }}
+            </div>
+
+            <!-- Tags for this post -->
+            {% if post.tags.all %}
+            <div class="post-tags">
+                <span>Tags:</span>
+                {% for post_tag in post.tags.all %}
+                <a href="{% url 'tag_detail' post_tag.slug %}" class="tag-badge">
+                    {{ post_tag.name }}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a href="{% url 'post_detail' post.id %}" class="btn">
+                Read More →
+            </a>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-posts">No posts with this tag yet.</p>
+    {% endif %}
+
+    <!-- Back to all tags -->
+    <div class="back-link">
+        <a href="{% url 'tag_list' %}">← View All Tags</a>
+    </div>
+</div>
+{% endblock %}
