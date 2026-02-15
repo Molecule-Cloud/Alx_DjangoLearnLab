@@ -28,3 +28,42 @@ class Post(models.Model):
     class Meta:
         # Add newest posts first
         ordering = ['-published_date']
+
+
+
+class Comment(models.Model):
+    """
+    Comment model for blog posts
+    
+    Each comment is tied to:
+    - One specific post (ForeignKey)
+    - One user who wrote it (ForeignKey)
+    """
+    
+    # Which post this comment belongs to
+    post = models.ForeignKey(
+        Post, 
+        on_delete=models.CASCADE,  # If post deleted, delete its comments
+        related_name='comments'     # Allows post.comments.all()
+    )
+    
+    # Who wrote this comment
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,   # If user deleted, delete their comments
+        related_name='comments'      # Allows user.comments.all()
+    )
+    
+    # The comment text
+    content = models.TextField()
+    
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)  # Set when created
+    updated_at = models.DateTimeField(auto_now=True)      # Updates on every save
+    
+    class Meta:
+        ordering = ['-created_at']  # Show newest comments first
+    
+    def __str__(self):
+        """String representation"""
+        return f'Comment by {self.author.username} on {self.post.title}'
