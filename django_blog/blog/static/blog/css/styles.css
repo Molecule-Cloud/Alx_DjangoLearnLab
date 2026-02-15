@@ -389,3 +389,205 @@ footer {
     margin: 0.5rem 0;
     color: #555;
 }
+
+
+/* Add to blog/static/blog/css/styles.css */
+
+/* Posts container */
+.posts-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* New post button */
+.new-post-btn {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+/* Post cards (list view) */
+.post-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.post-title {
+    margin-bottom: 0.5rem;
+}
+
+.post-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.post-title a:hover {
+    color: #667eea;
+}
+
+.post-meta {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.post-author {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.post-date {
+    margin-left: 1rem;
+}
+
+.post-excerpt {
+    color: #4a5568;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Post detail view */
+.post-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-detail {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-detail h1 {
+    margin-bottom: 1rem;
+    color: #2d3748;
+}
+
+.post-content {
+    color: #4a5568;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.post-actions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+}
+
+.back-link {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.back-link a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+/* Form styles */
+.post-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.post-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+/* Delete confirmation */
+.delete-confirm-container {
+    max-width: 500px;
+    margin: 3rem auto;
+}
+
+.delete-confirm-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.warning-text {
+    color: #e53e3e;
+    font-size: 1.2rem;
+    margin: 1.5rem 0;
+}
+
+.warning-detail {
+    color: #718096;
+    margin-bottom: 2rem;
+}
+
+.delete-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.pagination .step-links a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 5px;
+    color: #667eea;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.pagination .step-links a:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.pagination .current {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    background: #667eea;
+    color: white;
+    border-radius: 5px;
+}
+
+/* No posts message */
+.no-posts {
+    text-align: center;
+    padding: 3rem;
+    background: #f7fafc;
+    border-radius: 10px;
+    color: #718096;
+}

@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Django Blog{% endblock %}
+
+{% block content %}
+<div class="post-detail-container">
+    <article class="post-detail">
+        <h1>{{ post.title }}</h1>
+
+        <div class="post-meta">
+            <span class="post-author">
+                By {{ post.author.username }}
+            </span>
+            <span class="post-date">
+                {{ post.published_date|date:"F j, Y" }}
+            </span>
+        </div>
+
+        <div class="post-content">
+            {{ post.content|linebreaks }}
+        </div>
+
+        <!-- Action buttons (only for author) -->
+        {% if user == post.author %}
+        <div class="post-actions">
+            <a href="{% url 'post_update' post.id %}" class="btn btn-edit">
+                Edit Post
+            </a>
+            <a href="{% url 'post_delete' post.id %}" class="btn btn-delete">
+                Delete Post
+            </a>
+        </div>
+        {% endif %}
+    </article>
+
+    <!-- Back to all posts -->
+    <div class="back-link">
+        <a href="{% url 'post_list' %}">← Back to All Posts</a>
+    </div>
+</div>
+{% endblock %}

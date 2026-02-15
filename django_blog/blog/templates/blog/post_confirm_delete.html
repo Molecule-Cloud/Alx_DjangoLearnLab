@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Delete Post - {{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="delete-confirm-container">
+    <div class="delete-confirm-box">
+        <h1>Delete Post</h1>
+
+        <p class="warning-text">
+            Are you sure you want to delete "<strong>{{ post.title }}</strong>"?
+        </p>
+
+        <p class="warning-detail">
+            This action cannot be undone. All content will be permanently removed.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="delete-actions">
+                <button type="submit" class="btn btn-delete">
+                    Yes, Delete
+                </button>
+                <a href="{% url 'post_detail' post.id %}" class="btn">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Blog Posts - Django Blog{% endblock %}
+
+{% block content %}
+<div class="posts-container">
+    <h1>Blog Posts</h1>
+
+    <!-- Show "New Post" button only to logged-in users -->
+    {% if user.is_authenticated %}
+    <div class="new-post-btn">
+        <a href="{% url 'post_create' %}" class="btn btn-primary">
+            + Create New Post
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Posts list -->
+    {% if posts %}
+    {% for post in posts %}
+    <article class="post-card">
+        <h2 class="post-title">
+            <a href="{% url 'post_detail' post.id %}">
+                {{ post.title }}
+            </a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-author">
+                By {{ post.author.username }}
+            </span>
+            <span class="post-date">
+                {{ post.published_date|date:"F j, Y" }}
+            </span>
+        </div>
+
+        <div class="post-excerpt">
+            {{ post.content|truncatewords:50 }}
+        </div>
+
+        <a href="{% url 'post_detail' post.id %}" class="btn">
+            Read More →
+        </a>
+    </article>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <p class="no-posts">No posts yet. Be the first to create one!</p>
+    {% endif %}
+</div>
+{% endblock %}
