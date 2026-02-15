@@ -33,17 +33,19 @@ urlpatterns = [
     
     path('posts/', PostListView.as_view(), name='post_list'),
 
+    
+    # Create: /post/5/comment/new/
     path('post/<int:post_id>/comment/new/', 
          CommentCreateView.as_view(), 
          name='comment_create'),
     
-    # Edit comment
-    path('comment/<int:pk>/edit/', 
+    # Edit: /post/5/comment/3/edit/
+    path('post/<int:post_id>/comment/<int:pk>/edit/', 
          CommentUpdateView.as_view(), 
          name='comment_edit'),
     
-    # Delete comment
-    path('comment/<int:pk>/delete/', 
+    # Delete: /post/5/comment/3/delete/
+    path('post/<int:post_id>/comment/<int:pk>/delete/', 
          CommentDeleteView.as_view(), 
          name='comment_delete'),
 ]

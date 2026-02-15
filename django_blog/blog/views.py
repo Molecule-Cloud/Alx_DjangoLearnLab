@@ -199,53 +199,37 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    """
-    Edit an existing comment
-    URL: /comment/<int:pk>/edit/
-    
-    Only the comment author can edit
-    """
-    
     model = Comment
     form_class = CommentForm
     template_name = 'blog/comment_form.html'
     
     def test_func(self):
-        """Permission check - only author can edit"""
         comment = self.get_object()
         return self.request.user == comment.author
     
-    def form_valid(self, form):
-        messages.success(self.request, 'Your comment has been updated!')
-        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add post_id to context for cancel button
+        context['post_id'] = self.kwargs.get('post_id')
+        return context
     
     def get_success_url(self):
-        """Redirect back to the post after editing"""
+        # Redirect back to the post
         return reverse('post_detail', kwargs={'pk': self.object.post.id})
 
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    """
-    Delete a comment
-    URL: /comment/<int:pk>/delete/
-    
-    Only the comment author can delete
-    """
-    
     model = Comment
     template_name = 'blog/comment_confirm_delete.html'
     
     def test_func(self):
-        """Permission check - only author can delete"""
         comment = self.get_object()
         return self.request.user == comment.author
     
-    def delete(self, request, *args, **kwargs):
-        """Add success message on delete"""
-        messages.success(request, 'Your comment has been deleted.')
-        return super().delete(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_id'] = self.kwargs.get('post_id')
+        return context
     
     def get_success_url(self):
-        """Redirect back to the post after deletion"""
-        comment = self.get_object()
-        return reverse('post_detail', kwargs={'pk': comment.post.id})
+        return reverse('post_detail', kwargs={'pk': self.object.post.id})

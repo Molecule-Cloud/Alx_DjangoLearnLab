@@ -51,8 +51,8 @@ New Comment - Django Blog
                 </button>
 
                 <!-- Cancel button goes back to post -->
-                <a href="{% if object %}{% url 'post_detail' object.post.id %}{% else %}javascript:history.back(){% endif %}"
-                    class="btn">Cancel</a>
+                <a href="{% url 'post_detail' pk=post_id %}" class="btn">Cancel</a>
+
             </div>
         </form>
     </div>

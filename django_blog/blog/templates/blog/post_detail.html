@@ -62,10 +62,12 @@
                 <!-- Comment actions (only for author) -->
                 {% if user == comment.author %}
                 <div class="comment-actions">
-                    <a href="{% url 'comment_edit' comment.id %}" class="btn btn-small btn-edit">
+                    <a href="{% url 'comment_edit' post_id=post.id pk=comment.id %}" class="btn btn-small btn-edit">
                         Edit
                     </a>
-                    <a href="{% url 'comment_delete' comment.id %}" class="btn btn-small btn-delete">
+                    
+                    <!-- Delete link -->
+                    <a href="{% url 'comment_delete' post_id=post.id pk=comment.id %}" class="btn btn-small btn-delete">
                         Delete
                     </a>
                 </div>
