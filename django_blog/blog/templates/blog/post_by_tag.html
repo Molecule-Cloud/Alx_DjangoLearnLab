@@ -1,0 +1,36 @@
+<!-- blog/templates/blog/post_by_tag.html -->
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>Posts tagged with "{{ tag.name }}"</h1>
+
+{% if posts %}
+{% for post in posts %}
+<article class="post-card">
+    <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+    <p>{{ post.content|truncatewords:30 }}</p>
+    <small>By {{ post.author }} on {{ post.published_date|date:"F j, Y" }}</small>
+</article>
+{% endfor %}
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo; first</a>
+    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
+{% else %}
+<p>No posts with this tag yet.</p>
+{% endif %}
+
+<a href="{% url 'tag_list' %}">← Back to all tags</a>
+{% endblock %}

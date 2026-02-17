@@ -259,6 +259,26 @@ class TagDetailView(DetailView):
         context['posts'] = tag.posts.all().order_by('-published_date')
         return context
 
+class PostByTagListView(ListView):
+    """
+    Display posts filtered by a specific tag
+    URL: /tags/<slug:tag_slug>/
+    """
+    model = Post
+    template_name = 'blog/post_by_tag.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        """Filter posts by tag slug from URL"""
+        self.tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        return Post.objects.filter(tags=self.tag).order_by('-published_date')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
+
 
 class PostSearchView(ListView):
     """
