@@ -28,14 +28,15 @@ def register(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, f'Account created for {user.name}')
+            messages.success(request, f'Account created for {user.username}')
             return redirect('login')
     else:
         form = UserRegistrationForm()
     return render(request, 'blog/register.html', {'form': form})
 
 
-@login_required
+
+@login_required(login_url='login')
 def profile(request):
     if request.method == 'POST':
         user = request.user # Get the curret user

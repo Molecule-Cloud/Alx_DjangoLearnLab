@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% blog title %}Django Blog{%endblock%}</title>
+        <title>{% block title %}Django Blog{%endblock%}</title>
         <link rel="stylesheet" href="{% static 'blog/css/styles.css'%}">
     </head>
     <body>
@@ -41,7 +41,7 @@
             </nav>
         </header>
         <div class="content">
-            {% blog content %}
+            {% block content %}
             <!-- pass -->
             {% endblock %}
         </div>

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'blog',
-    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +76,10 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'beno',
+        'NAME': 'django_blog_db',
         'USER': 'beno',
         'PASSWORD': 'Admin@123',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -148,4 +147,6 @@ TEMPLATES = [
     }
 ]
 
-
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'home'

@@ -31,7 +31,7 @@ class TagWidget(forms.TextInput):
             return str(value)
 
 
-class UserRegisterForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     """Custom registration form with email field"""
     
     email = forms.EmailField(
