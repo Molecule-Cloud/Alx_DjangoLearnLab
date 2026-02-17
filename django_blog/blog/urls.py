@@ -56,7 +56,7 @@ urlpatterns = [
     
     # ===== TAGGING =====
     # List all tags
-    path('tags/', TagListView.as_view(), name='tag_list'),
+    path('tags/<slug:slug_tag>', TagListView.as_view(), name='tag_list'),
     
     # View posts by tag
     path('tag/<slug:slug>/', TagDetailView.as_view(), name='tag_detail'),
