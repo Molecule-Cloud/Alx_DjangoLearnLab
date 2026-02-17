@@ -1,72 +1,67 @@
+# blog/urls.py
 from django.urls import path
-from django.contrib.auth import views as auth_views 
+from django.contrib.auth import views as auth_views
 from . import views
 from .views import (
+    # Post views
     PostListView, PostDetailView, PostCreateView,
-    PostUpdateView, PostDeleteView, CommentCreateView, CommentUpdateView, CommentDeleteView
+    PostUpdateView, PostDeleteView,
+    
+    # Comment views
+    CommentCreateView, CommentUpdateView, CommentDeleteView,
+    
+    # Tag and search views
+    TagListView, TagDetailView, PostSearchView
 )
-from .views import (
-    TagListView, TagDetailView, PostSearchView  
-)
-
 
 urlpatterns = [
-    # Homepage
+    # ===== HOME =====
     path('', views.home, name='home'),
     
-    # ===== AUTHENTICATION URLS =====
-    
+    # ===== AUTHENTICATION =====
     path('register/', views.register, name='register'),
-    
-    # Login - Using Django's built-in view
     path('login/', auth_views.LoginView.as_view(
-        template_name='blog/login.html'  # Custom template
+        template_name='blog/login.html'
     ), name='login'),
-    
-    # Logout - Using Django's built-in view
     path('logout/', auth_views.LogoutView.as_view(
-        next_page='home'  # Redirect to home after logout
+        next_page='home'
     ), name='logout'),
-    
     path('profile/', views.profile, name='profile'),
-
+    
+    # ===== BLOG POSTS (CRUD) =====
+    # List all posts
+    path('posts/', PostListView.as_view(), name='post_list'),
+    
+    # Create new post
     path('post/new/', PostCreateView.as_view(), name='post_create'),
+    
+    # View single post
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
+    
+    # Update post
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
+    
+    # Delete post
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
     
-    # Delete: /post/5/comment/3/delete/
-    path('post/<int:post_id>/comment/<int:comment_id>/delete/', 
-         CommentDeleteView.as_view(), 
-         name='comment_delete'),
-
-     # ===== TAGGING =====
+    # ===== COMMENTS =====
+    # Create comment on a post - MATCHES: post/<int:pk>/comments/new/
+    path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment_create'),
+    
+    # Update comment - MATCHES: comment/<int:pk>/update/
+    path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update'),
+    
+    # Delete comment
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
+    
+    # ===== TAGGING =====
+    # List all tags
     path('tags/', TagListView.as_view(), name='tag_list'),
+    
+    # View posts by tag
     path('tag/<slug:slug>/', TagDetailView.as_view(), name='tag_detail'),
     
     # ===== SEARCH =====
-    path('search/', PostSearchView.as_view(), name='post_search'),
-
-    
-    # Create: /post/5/comment/new/
-    path('post/<int:pk>/comment/new/', 
-         CommentCreateView.as_view(), 
-         name='comment_create'),
-    
-    # Edit: /post/5/comment/3/edit/
-    path('post/<int:pk>/comment/<int:pk>/edit/', 
-         CommentUpdateView.as_view(), 
-         name='comment_edit'),
-    
-    # Delete: /post/5/comment/3/delete/
-    path('post/<int:pk>/comment/<int:pk>/delete/', 
-         CommentDeleteView.as_view(), 
-         name='comment_delete'),
-
-     # ===== TAGGING =====
-     path('tags/', TagListView.as_view(), name='tag_list'),
-    path('tag/<slug:slug>/', TagDetailView.as_view(), name='tag_detail'),
-    
-    # ===== SEARCH =====
+    # Search posts
     path('search/', PostSearchView.as_view(), name='post_search'),
 ]
