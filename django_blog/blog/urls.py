@@ -39,7 +39,7 @@ urlpatterns = [
 
     
     # Create: /post/5/comment/new/
-    path('post/<int:post_id>/comment/new/', 
+    path('post/<int:pk>/comment/new/', 
          CommentCreateView.as_view(), 
          name='comment_create'),
     
