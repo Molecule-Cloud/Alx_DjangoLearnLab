@@ -6,7 +6,7 @@ from .views import (
     PostUpdateView, PostDeleteView, CommentCreateView, CommentUpdateView, CommentDeleteView
 )
 from .views import (
-    TagListView, TagDetailView, PostSearchView  # Add these
+    TagListView, TagDetailView, PostSearchView  
 )
 
 
@@ -35,7 +35,17 @@ urlpatterns = [
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
     
-    path('posts/', PostListView.as_view(), name='post_list'),
+    # Delete: /post/5/comment/3/delete/
+    path('post/<int:post_id>/comment/<int:comment_id>/delete/', 
+         CommentDeleteView.as_view(), 
+         name='comment_delete'),
+
+     # ===== TAGGING =====
+    path('tags/', TagListView.as_view(), name='tag_list'),
+    path('tag/<slug:slug>/', TagDetailView.as_view(), name='tag_detail'),
+    
+    # ===== SEARCH =====
+    path('search/', PostSearchView.as_view(), name='post_search'),
 
     
     # Create: /post/5/comment/new/
@@ -44,17 +54,17 @@ urlpatterns = [
          name='comment_create'),
     
     # Edit: /post/5/comment/3/edit/
-    path('post/<int:post_id>/comment/<int:pk>/edit/', 
+    path('post/<int:pk>/comment/<int:pk>/edit/', 
          CommentUpdateView.as_view(), 
          name='comment_edit'),
     
     # Delete: /post/5/comment/3/delete/
-    path('post/<int:post_id>/comment/<int:pk>/delete/', 
+    path('post/<int:pk>/comment/<int:pk>/delete/', 
          CommentDeleteView.as_view(), 
          name='comment_delete'),
 
      # ===== TAGGING =====
-    path('tags/', TagListView.as_view(), name='tag_list'),
+     path('tags/', TagListView.as_view(), name='tag_list'),
     path('tag/<slug:slug>/', TagDetailView.as_view(), name='tag_detail'),
     
     # ===== SEARCH =====
