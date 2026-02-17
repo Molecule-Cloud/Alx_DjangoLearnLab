@@ -71,10 +71,7 @@ class PostForm(forms.ModelForm):
     # Custom tag field using TagWidget
     tags_input = forms.CharField(
         required=False,
-        widget=TagWidget(attrs={
-            'placeholder': 'Enter tags separated by commas (e.g., python, django, web)'
-        }),
-        label='Tags'
+        widget=TagWidget()
     )
     
     class Meta:
@@ -179,4 +176,4 @@ class CommentForm(forms.ModelForm):
         # Add any additional CSS classes
         self.fields['content'].widget.attrs.update({
             'class': 'form-control comment-input'
-        })blo
+        })
