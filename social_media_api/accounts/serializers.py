@@ -60,11 +60,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 # USER LOGIN SERIALIZER
 
-class UserLoginSerializer(serializers.Serilizer):
+class UserLoginSerializer(serializers.Serializer):
     """
         Validate Username and Password for user Login
     """
-    username = serializers.CharFeild(
+    username = serializers.CharField(
         required = True,
         write_only = True,
         style = {"input_type": "Password"}
@@ -101,8 +101,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
     is_following = serializers.SerializerMethodField()
 
     class Meta:
+        model = CustomUser
         fields = [
-            'id', 'username', 'email', 'bio', 'profile_picture',  'follwers_count', 'following_count', 'is_following', 'date_joined'
+            'id', 'username', 'email', 'bio', 'profile_picture',  'followers_count', 'following_count', 'is_following', 'date_joined'
         ]
         read_only_fields = ['id', 'date_joined']
 
