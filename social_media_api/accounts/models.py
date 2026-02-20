@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     """
 
     bio = models.TextField(max_length=500, blank = True, help_text ="Tell us a little about yourself")
-    profile_picture = models.URLField(blank=True, help_text="Profile Picture Link")
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
