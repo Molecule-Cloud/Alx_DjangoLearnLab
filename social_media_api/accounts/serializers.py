@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from .models import CustomUser
 
 
-User = get_user_model()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """
@@ -24,12 +23,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         required = True,
         style = {'input_type': 'password'}
     )
-    token =serializers.CharField(read_only = True)
+    token =serializers.CharField()
 
 
     class Meta:
 
-        model = User
+        model = get_user_model()
 
         fields = ['id', 'username', 'email', 'password', 'password2', 'bio', 'profile_picture', 'token']
 
@@ -59,8 +58,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         Create and return a User with encrytped data when validated
         """
         validated_data.pop('password2')
-        user = User.objects.create_user(**validated_data)
-        token = Token.objects.create_user(user=user)
+        user = get_user_model().objects.create_user(**validated_data)
+        token = Token.objects.create(user=user)
         user.auth_token = token
         user.save()
         return user
