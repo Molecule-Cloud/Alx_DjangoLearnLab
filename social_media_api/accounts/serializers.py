@@ -1,9 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
 from .models import CustomUser
 
 
+User = get_user_model()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """
@@ -21,12 +24,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         required = True,
         style = {'input_type': 'password'}
     )
+    token =serializers.CharField(read_only = True)
+
 
     class Meta:
 
-        model = CustomUser
+        model = User
 
-        fields = ['id', 'username', 'email', 'password', 'password2', 'bio', 'profile_picture']
+        fields = ['id', 'username', 'email', 'password', 'password2', 'bio', 'profile_picture', 'token']
 
         extra_kwargs = {
             'email': {'required': True},
@@ -48,14 +53,16 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             })
         else:
             return attributes
-        
 
-    def create(self, validated_password):
+    def create(self, validated_data):
+        """"
+        Create and return a User with encrytped data when validated
         """
-        Create and return a new user wiith encrypted password
-        """
-        validated_password.pop('password2')
-        user = CustomUser.objects.create_user(**validated_password)
+        validated_data.pop('password2')
+        user = User.objects.create_user(**validated_data)
+        token = Token.objects.create_user(user=user)
+        user.auth_token = token
+        user.save()
         return user
 
 # USER LOGIN SERIALIZER

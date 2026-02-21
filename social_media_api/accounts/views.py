@@ -37,7 +37,7 @@ class RegistrationView(generics.CreateAPIView):
         return Response(
             {
                 'user': UserProfileSerializer(user, context={'request': request}).data,
-                'token': token.key,
+                'token': user.auth_token.key,
                 'message': "Created Successfully"
             }, status=status.HTTP_201_CREATED
         )
